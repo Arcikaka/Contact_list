@@ -1,0 +1,7 @@
+{% extends '@ContactList/main.html.twig' %}
+{% block content %}
+{% for person in persons %}
+    <a href="{{ path('show_user_by_id', {"id" : person.id}) }}" class="myButton">{{ person.surname }}, {{ person.name }}</a><br>
+
+{% endfor %}
+{% endblock %}
