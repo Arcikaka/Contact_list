@@ -5,7 +5,9 @@ namespace ContactListBundle\Controller;
 use ContactListBundle\Entity\Person;
 use ContactListBundle\Form\PersonType;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
 class PersonController extends Controller
@@ -24,7 +26,7 @@ class PersonController extends Controller
 
     /**
      * @param Request $request
-     * @return \Symfony\Component\HttpFoundation\RedirectResponse
+     * @return RedirectResponse
      * @Route("/new/", methods={"POST"}, name="create_new_person", methods={"POST"})
      */
     public function createNewPerson(Request $request)
@@ -48,7 +50,7 @@ class PersonController extends Controller
     /**
      * @param $id
      * @Route("/{id}/", name="show_user_by_id", requirements={"id" = "\d+"}, methods={"GET"})
-     * @return \Symfony\Component\HttpFoundation\Response
+     * @return Response
      */
     public function showPersonById($id)
     {
@@ -75,7 +77,7 @@ class PersonController extends Controller
 
     /**
      * @param $id
-     * @return \Symfony\Component\HttpFoundation\RedirectResponse|\Symfony\Component\HttpFoundation\Response
+     * @return RedirectResponse|Response
      * @Route("/{id}/modify/", name="modify_person_form", methods={"GET"})
      */
     public function modifyPersonFormAction($id)
@@ -93,7 +95,7 @@ class PersonController extends Controller
      * @param Request $request
      * @param $id
      * @Route("/{id}/modify/", name="modify_person", methods={"POST"})
-     * @return \Symfony\Component\HttpFoundation\RedirectResponse
+     * @return RedirectResponse
      */
     public function modifyPersonActon(Request $request, $id)
     {
@@ -116,7 +118,7 @@ class PersonController extends Controller
     /**
      * @param $id
      * @Route("/{id}/delete/", name="delete_person_form", methods={"GET"})
-     * @return \Symfony\Component\HttpFoundation\Response
+     * @return Response
      */
     public function deletePersonQuestionAction($id)
     {
@@ -129,12 +131,11 @@ class PersonController extends Controller
     }
 
     /**
-     * @param Request $request
      * @param $id
+     * @return RedirectResponse
      * @Route("/{id}/delete/", name="delete_person", methods={"POST"})
-     * @return \Symfony\Component\HttpFoundation\RedirectResponse
      */
-    public function deletePersonAction(Request $request, $id)
+    public function deletePersonAction($id)
     {
         $em = $this->getDoctrine()->getManager();
         $repository = $em->getRepository('ContactListBundle:Person');
