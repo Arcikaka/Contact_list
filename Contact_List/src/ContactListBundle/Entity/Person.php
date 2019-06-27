@@ -2,6 +2,8 @@
 
 namespace ContactListBundle\Entity;
 
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -60,6 +62,17 @@ class Person
      */
     private $email;
 
+    /**
+     * @var Groups
+     * @ORM\ManyToMany(targetEntity="ContactListBundle\Entity\Person", inversedBy="persons")
+     * @ORM\JoinColumn(name="groups_id", referencedColumnName="id")
+     */
+    private $groups;
+    
+    public function __construct()
+    {
+        $this->groups = new ArrayCollection();
+    }
 
     /**
      * Get id
@@ -189,6 +202,25 @@ class Person
     public function setEmail(Email $email): void
     {
         $this->email = $email;
+    }
+
+    public function addGroups(Groups $groups)
+    {
+        if (!$this->groups->contains($groups)) {
+            $this->groups->add($groups);
+        }
+    }
+
+    public function removeGroups(Groups $groups)
+    {
+        if ($this->groups->contains($groups)) {
+            $this->groups->removeElement($groups);
+        }
+    }
+
+    public function getGroups() : Collection
+    {
+        return $this->groups;
     }
     
 }
