@@ -64,8 +64,7 @@ class Person
 
     /**
      * @var Groups
-     * @ORM\ManyToMany(targetEntity="ContactListBundle\Entity\Person", inversedBy="persons")
-     * @ORM\JoinColumn(name="groups_id", referencedColumnName="id")
+     * @ORM\ManyToMany(targetEntity="ContactListBundle\Entity\Groups", inversedBy="persons")
      */
     private $groups;
     
