@@ -15,7 +15,7 @@ class AddressController extends Controller
     //TODO make action for Address form, and action for saving new Address into the database
 
     /**
-     * @\Symfony\Component\Routing\Annotation\Route("newAddress/", name="new_Address_form", methods={"GET"})
+     * @\Symfony\Component\Routing\Annotation\Route("/newAddress/", name="new_address_form", methods={"GET"})
      */
     public function newAddressAction()
     {
@@ -26,7 +26,7 @@ class AddressController extends Controller
     }
 
     /**
-     * @Route("{id}/modify/", name="save_new_Address", methods={"POST"})
+     * @Route("/{id}/modify/", name="save_new_address", methods={"POST"})
      * @param Request $request
      * @return RedirectResponse|Response
      */
@@ -51,7 +51,7 @@ class AddressController extends Controller
     /**
      * @param Request $request
      * @param $id
-     * @Route("{id}/modify/", name="modify_Address", methods={"POST"})
+     * @Route("/{id}/modify/address/", name="modify_address", methods={"POST"})
      * @return RedirectResponse|Response
      */
     public function modifyAddressAction(Request $request, $id)
@@ -74,7 +74,7 @@ class AddressController extends Controller
 
     /**
      * @param $id
-     * @Route("{id}/delete/", methods={"GET"}, name="delete_Address_question")
+     * @Route("/{id}/delete/address/", methods={"GET"}, name="delete_address_question")
      * @return Response
      */
     public function deleteAddressQuestionAction($id)
@@ -89,7 +89,7 @@ class AddressController extends Controller
     /**
      * @param $id
      * @return RedirectResponse
-     * @Route("{id}/delete/", name="delete_Address", methods={"POST"})
+     * @Route("/{id}/delete/address/", name="delete_address", methods={"POST"})
      */
     public function deleteAddressAction($id)
     {

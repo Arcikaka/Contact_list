@@ -15,7 +15,7 @@ class EmailController extends Controller
     //TODO make action for email form, and action for saving new Email into the database
 
     /**
-     * @\Symfony\Component\Routing\Annotation\Route("newEmail/", name="new_Email_form", methods={"GET"})
+     * @\Symfony\Component\Routing\Annotation\Route("/newEmail/", name="new_email_form", methods={"GET"})
      */
     public function newEmailAction()
     {
@@ -26,7 +26,7 @@ class EmailController extends Controller
     }
 
     /**
-     * @Route("{id}/modify/", name="save_new_Email", methods={"POST"})
+     * @Route("/{id}/modify/email/", name="save_new_email", methods={"POST"})
      * @param Request $request
      * @return RedirectResponse|Response
      */
@@ -51,7 +51,7 @@ class EmailController extends Controller
     /**
      * @param Request $request
      * @param $id
-     * @Route("{id}/modify/", name="modify_Email", methods={"POST"})
+     * @Route("/{id}/modify/email/", name="modify_Email", methods={"POST"})
      * @return RedirectResponse|Response
      */
     public function modifyEmailAction(Request $request, $id)
@@ -74,7 +74,7 @@ class EmailController extends Controller
 
     /**
      * @param $id
-     * @Route("{id}/delete/", methods={"GET"}, name="delete_Email_question")
+     * @Route("/{id}/delete/email/", methods={"GET"}, name="delete_Email_question")
      * @return Response
      */
     public function deleteEmailQuestionAction($id)
@@ -89,7 +89,7 @@ class EmailController extends Controller
     /**
      * @param $id
      * @return RedirectResponse
-     * @Route("{id}/delete/", name="delete_Email", methods={"POST"})
+     * @Route("/{id}/delete/email/", name="delete_Email", methods={"POST"})
      */
     public function deleteEmailAction($id)
     {

@@ -13,7 +13,7 @@ use Symfony\Component\Routing\Annotation\Route;
 class PersonController extends Controller
 {
     /**
-     * @\Symfony\Component\Routing\Annotation\Route("new/", name="new_person", methods={"GET"})
+     * @\Symfony\Component\Routing\Annotation\Route("/new/", name="new_person", methods={"GET"})
      */
     public function newPersonAction()
     {

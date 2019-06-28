@@ -14,7 +14,7 @@ class PhoneController extends Controller
 {
     //TODO make action for phone form and action for saving phone into the database
     /**
-     * @\Symfony\Component\Routing\Annotation\Route("newPhone/", name="new_phone_form", methods={"GET"})
+     * @\Symfony\Component\Routing\Annotation\Route("/newPhone/", name="new_phone_form", methods={"GET"})
      */
     public function newPhoneAction()
     {
@@ -25,7 +25,7 @@ class PhoneController extends Controller
     }
 
     /**
-     * @Route("{id}/modify/", name="save_new_phone", methods={"POST"})
+     * @Route("/{id}/modify/phone/", name="save_new_phone", methods={"POST"})
      * @param Request $request
      * @return RedirectResponse|Response
      */
@@ -50,7 +50,7 @@ class PhoneController extends Controller
     /**
      * @param Request $request
      * @param $id
-     * @Route("{id}/modify/", name="modify_phone", methods={"POST"})
+     * @Route("/{id}/modify/phone/", name="modify_phone", methods={"POST"})
      * @return RedirectResponse|Response
      */
     public function modifyPhoneAction(Request $request, $id)
@@ -73,7 +73,7 @@ class PhoneController extends Controller
 
     /**
      * @param $id
-     * @Route("{id}/delete/", methods={"GET"}, name="delete_phone_question")
+     * @Route("/{id}/delete/phone/", methods={"GET"}, name="delete_phone_question")
      * @return Response
      */
     public function deletePhoneQuestionAction($id)
@@ -88,7 +88,7 @@ class PhoneController extends Controller
     /**
      * @param $id
      * @return RedirectResponse
-     * @Route("{id}/delete/", name="delete_phone", methods={"POST"})
+     * @Route("/{id}/delete/phone/", name="delete_phone", methods={"POST"})
      */
     public function deletePhoneAction($id)
     {
