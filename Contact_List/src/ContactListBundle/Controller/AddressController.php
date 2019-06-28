@@ -12,8 +12,6 @@ use Symfony\Component\Routing\Annotation\Route;
 
 class AddressController extends Controller
 {
-    //TODO make action for Address form, and action for saving new Address into the database
-
     /**
      * @\Symfony\Component\Routing\Annotation\Route("/newAddress/", name="new_address_form", methods={"GET"})
      */

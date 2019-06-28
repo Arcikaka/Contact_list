@@ -12,7 +12,6 @@ use Symfony\Component\HttpFoundation\Response;
 
 class PhoneController extends Controller
 {
-    //TODO make action for phone form and action for saving phone into the database
     /**
      * @\Symfony\Component\Routing\Annotation\Route("/newPhone/", name="new_phone_form", methods={"GET"})
      */

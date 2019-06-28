@@ -12,8 +12,6 @@ use Symfony\Component\Routing\Annotation\Route;
 
 class EmailController extends Controller
 {
-    //TODO make action for email form, and action for saving new Email into the database
-
     /**
      * @\Symfony\Component\Routing\Annotation\Route("/newEmail/", name="new_email_form", methods={"GET"})
      */
