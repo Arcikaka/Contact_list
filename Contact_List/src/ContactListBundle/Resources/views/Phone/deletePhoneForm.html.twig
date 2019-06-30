@@ -1,0 +1,11 @@
+{% extends "@ContactList/main.html.twig" %}
+{% block content %}
+    Are you sure you want to delete phone?
+    <form action="{{ path('show_all_phones') }}" method="get">
+        <input type="submit" name="no" value="No" class="myButton">
+    </form>
+    <form action="" method="post">
+        <input type="submit" name="yes" value="Yes" class="myButton">
+    </form>
+
+{% endblock %}

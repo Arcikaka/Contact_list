@@ -1,0 +1,7 @@
+{% extends '@ContactList/main.html.twig' %}
+{% block content %}
+    {% for address in addresses %}
+        <a href="{{ path('show_address_by_id', {"id" : address.id}) }}" class="myButton">{{ address.city }} , {{ address.street }} , {{ address.houseNumber }} </a><br>
+
+    {% endfor %}
+{% endblock %}

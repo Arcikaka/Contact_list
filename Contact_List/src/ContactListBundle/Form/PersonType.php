@@ -23,6 +23,7 @@ class PersonType extends AbstractType
             ->add('address', EntityType::class, ['class' => 'ContactListBundle\Entity\Address'])
             ->add('email', EntityType::class, ['class' => 'ContactListBundle\Entity\Email'])
             ->add('phone', EntityType::class, ['class' => 'ContactListBundle\Entity\Phone'])
+            ->add('groups', EntityType::class, ['class' => 'ContactListBundle\Entity\Groups', 'choice_label' => 'name'])
             ->add('save', SubmitType::class, ['label' => 'Save Person']);
 
     }

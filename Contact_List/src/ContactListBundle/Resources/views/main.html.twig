@@ -82,9 +82,10 @@
 {% block menu %}
 <ul>
     <li><a href="{{ path('show_all_persons') }}" class="active">Home</a></li>
-    <li><a href="">Add Address</a></li>
-    <li><a href="">Add Phone</a></li>
-    <li><a href="">Add Email</a></li>
+    <li><a href="{{ path('new_address_form') }}">Add Address</a></li>
+    <li><a href="{{ path('new_phone_form') }}">Add Phone</a></li>
+    <li><a href="{{ path('new_email_form') }}">Add Email</a></li>
+    <li><a href="{{ path('new_group_form') }}">Add Group</a></li>
     <li><a href="{{ path('new_person') }}">Add Person</a></li>
 </ul>
 {% endblock %}

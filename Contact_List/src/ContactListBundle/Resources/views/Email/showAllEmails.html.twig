@@ -1,0 +1,7 @@
+{% extends '@ContactList/main.html.twig' %}
+{% block content %}
+    {% for email in emails %}
+        <a href="{{ path('show_email_by_id', {"id" : email.id}) }}" class="myButton">{{ email.emailAddress }}
+            , {{ email.type }}</a><br>
+    {% endfor %}
+{% endblock %}

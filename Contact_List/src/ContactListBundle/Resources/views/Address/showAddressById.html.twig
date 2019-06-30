@@ -1,0 +1,14 @@
+{% extends'@ContactList/main.html.twig' %}
+{% block content %}
+    {{ address.city }} <br>
+    {{ address.street }} <br>
+    {{ address.houseNumber }} <br>
+    {{ address.flat }} <br>
+    {{ address.zipCode }} <br>
+    <div class="myButton">
+        <a href="{{ path('modify_address', {"id" : address.id}) }}">Edit Address</a>
+    </div>
+    <div class="myButton">
+        <a href="{{ path('delete_address_question', {"id" : address.id}) }}">Delete Address</a>
+    </div>
+{% endblock %}

@@ -1,0 +1,15 @@
+{% extends'@ContactList/main.html.twig' %}
+{% block content %}
+    {{ group.name }} <br>
+    {{ group.description }} <br>
+    {% for person in group.person %}
+    {{ person.surname }}
+    {% endfor %}
+
+<div class="myButton">
+    <a href="{{ path('modify_group_form', {"id" : group.id}) }}">Edit Group</a>
+</div>
+<div class="myButton">
+    <a href="{{ path('delete_group_question', {"id" : group.id}) }}">Delete Group</a>
+</div>
+{% endblock %}

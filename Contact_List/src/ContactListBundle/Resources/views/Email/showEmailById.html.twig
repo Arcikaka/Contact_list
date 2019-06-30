@@ -1,0 +1,12 @@
+{% extends'@ContactList/main.html.twig' %}
+{% block content %}
+    {{ email.emailAddress }} <br>
+    {{ email.type }} <br>
+
+    <div class="myButton">
+        <a href="{{ path('modify_address_form', {"id" : email.id}) }}">Edit Email</a>
+    </div>
+    <div class="myButton">
+        <a href="{{ path('delete_Email_question', {"id" : email.id}) }}">Delete Email</a>
+    </div>
+{% endblock %}

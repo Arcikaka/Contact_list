@@ -1,0 +1,6 @@
+{% extends '@ContactList/main.html.twig' %}
+{% block content %}
+    {% for phone in phones %}
+        <a href="{{ path('show_phone_by_id', {"id" : phone.id}) }}" class="myButton">{{ phone.number }}, {{ phone.type }}</a><br>
+    {% endfor %}
+{% endblock %}

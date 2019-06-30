@@ -1,0 +1,12 @@
+{% extends'@ContactList/main.html.twig' %}
+{% block content %}
+    {{ phone.number }} <br>
+    {{ phone.type }} <br>
+
+    <div class="myButton">
+        <a href="{{ path('modify_phone_form', {"id" : phone.id}) }}">Edit Phone</a>
+    </div>
+    <div class="myButton">
+        <a href="{{ path('delete_phone_question', {"id" : phone.id}) }}">Delete Phone</a>
+    </div>
+{% endblock %}

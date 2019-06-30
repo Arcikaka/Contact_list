@@ -5,26 +5,31 @@ namespace ContactListBundle\Controller;
 use ContactListBundle\Entity\Phone;
 use ContactListBundle\Form\PhoneType;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\Routing\Annotation\Route;
 
+/**
+ * Class PhoneController
+ * @package ContactListBundle\Controller
+ * @Route("/phone")
+ */
 class PhoneController extends Controller
 {
     /**
-     * @\Symfony\Component\Routing\Annotation\Route("/newPhone/", name="new_phone_form", methods={"GET"})
+     * @Route("/new/", name="new_phone_form", methods={"GET"})
      */
     public function newPhoneAction()
     {
         $phone = new Phone();
         $form = $this->createForm(PhoneType::class, $phone);
 
-        return $this->render('@ContactList/newPhoneForm.html.twig', ['form' => $form->createView()]);
+        return $this->render('@ContactList/Phone/newPhoneForm.html.twig', ['form' => $form->createView()]);
     }
 
     /**
-     * @Route("/{id}/modify/phone/", name="save_new_phone", methods={"POST"})
+     * @Route("/new/", name="save_new_phone", methods={"POST"})
      * @param Request $request
      * @return RedirectResponse|Response
      */
@@ -43,13 +48,56 @@ class PhoneController extends Controller
 
             return $this->redirectToRoute('show_all_persons');
         }
-        return $this->render('@ContactList/newPhoneForm.html.twig', ['form' => $form->createView()]);
+        return $this->render('@ContactList/Phone/newPhoneForm.html.twig', ['form' => $form->createView()]);
     }
 
     /**
+     * @param $id
+     * @return Response
+     * @Route("/{id}/", name="show_phone_by_id", methods={"GET"}, requirements={"id" = "\d+"})
+     */
+    public function showPhoneByIdAction($id)
+    {
+        $em = $this->getDoctrine()->getManager();
+        $repository = $em->getRepository('ContactListBundle:Phone');
+        $phone = $repository->find($id);
+
+        return $this->render('@ContactList/Phone/showPhoneById.html.twig', ['phone' => $phone]);
+    }
+
+    /**
+     * @return Response
+     * @Route("/", name="show_all_phones", methods={"GET"})
+     */
+    public function showAllPhonesAction()
+    {
+        $em = $this->getDoctrine()->getManager();
+        $repository = $em->getRepository('ContactListBundle:Phone');
+        $phones = $repository->findAll();
+
+        return $this->render('@ContactList/Phone/showAllPhones.html.twig', ['phones' => $phones]);
+    }
+
+    /**
+     * @param $id
+     * @return Response
+     * @Route("/{id}/modify/", name="modify_phone_form", methods={"GET"})
+     */
+    public function modifyPhoneFormAction($id)
+    {
+        $em = $this->getDoctrine()->getManager();
+        $repository = $em->getRepository("ContactListBundle:Phone");
+        $phone = $repository->find($id);
+
+        $form = $this->createForm(PhoneType::class, $phone);
+
+        return $this->render('@ContactList/Phone/modifyPhoneForm.html.twig', ['form' => $form->createView(), 'id' => $phone->getId()]);
+
+    }
+    /**
      * @param Request $request
      * @param $id
-     * @Route("/{id}/modify/phone/", name="modify_phone", methods={"POST"})
+     * @Route("/{id}/modify//", name="modify_phone", methods={"POST"})
      * @return RedirectResponse|Response
      */
     public function modifyPhoneAction(Request $request, $id)
@@ -67,12 +115,12 @@ class PhoneController extends Controller
 
             return $this->redirectToRoute('show_all_persons');
         }
-        return $this->render('@ContactList/modifyPhoneForm.html.twig', ['form' => $form->createView(), 'id' => $phone->getId()]);
+        return $this->render('@ContactList/Phone/modifyPhoneForm.html.twig', ['form' => $form->createView(), 'id' => $phone->getId()]);
     }
 
     /**
      * @param $id
-     * @Route("/{id}/delete/phone/", methods={"GET"}, name="delete_phone_question")
+     * @Route("/{id}/delete//", methods={"GET"}, name="delete_phone_question")
      * @return Response
      */
     public function deletePhoneQuestionAction($id)
@@ -81,13 +129,13 @@ class PhoneController extends Controller
         $repository = $em->getRepository("ContactListBundle:Phone");
         $phone = $repository->find($id);
 
-        return $this->render('@ContactList/deletePhoneForm.html.twig');
+        return $this->render('@ContactList/Phone/deletePhoneForm.html.twig');
     }
 
     /**
      * @param $id
      * @return RedirectResponse
-     * @Route("/{id}/delete/phone/", name="delete_phone", methods={"POST"})
+     * @Route("/{id}/delete//", name="delete_phone", methods={"POST"})
      */
     public function deletePhoneAction($id)
     {

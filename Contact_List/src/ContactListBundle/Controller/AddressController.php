@@ -10,21 +10,26 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
+/**
+ * Class AddressController
+ * @package ContactListBundle\Controller
+ * @Route("/address")
+ */
 class AddressController extends Controller
 {
     /**
-     * @\Symfony\Component\Routing\Annotation\Route("/newAddress/", name="new_address_form", methods={"GET"})
+     * @\Symfony\Component\Routing\Annotation\Route("/new/", name="new_address_form", methods={"GET"})
      */
     public function newAddressAction()
     {
         $address = new Address();
         $form = $this->createForm(AddressType::class, $address);
 
-        return $this->render('@ContactList/newAddressForm.html.twig', ['form' => $form->createView()]);
+        return $this->render('@ContactList/Address/newAddressForm.html.twig', ['form' => $form->createView()]);
     }
 
     /**
-     * @Route("/{id}/modify/", name="save_new_address", methods={"POST"})
+     * @Route("/new/", name="save_new_address", methods={"POST"})
      * @param Request $request
      * @return RedirectResponse|Response
      */
@@ -41,15 +46,59 @@ class AddressController extends Controller
             $em->persist($address);
             $em->flush();
 
-            return $this->redirectToRoute('');
+            return $this->redirectToRoute('show_address_by_id', ['id' => $address->getId()]);
         }
-        return $this->render('@ContactList/newAddressForm.html.twig', ['form' => $form->createView()]);
+        return $this->render('@ContactList/Address/newAddressForm.html.twig', ['form' => $form->createView()]);
+    }
+
+    /**
+     * @param $id
+     * @Route("/{id}/", name="show_address_by_id", requirements={"id" = "\d+"}, methods={"GET"})
+     * @return Response
+     */
+    public function showAddressById($id)
+    {
+        $em = $this->getDoctrine()->getManager();
+        $repository = $em->getRepository('ContactListBundle:Address');
+        $address = $repository->find($id);
+
+        return $this->render('@ContactList/Address/showAddressById.html.twig', ['address' => $address]);
+
+    }
+
+    /**
+     * @Route("/", name="show_all_address", methods={"GET"})
+     */
+    public function showAllAddress()
+    {
+        $em = $this->getDoctrine()->getManager();
+        $repository = $em->getRepository('ContactListBundle:Address');
+        /** @var Address[] $addresses */
+        $addresses = $repository->findAll();
+
+        return $this->render('@ContactList/Address/showAllAddress.html.twig', ['addresses' => $addresses]);
+    }
+
+    /**
+     * @param $id
+     * @return Response
+     * @Route("/{id}/modify/", name="modify_address_form", methods={"GET"})
+     */
+    public function modifyAddressFormAction($id)
+    {
+        $em = $this->getDoctrine()->getManager();
+        $address = $em->getRepository('ContactListBundle:Address')->find($id);
+        $form = $this->createForm(AddressType::class, $address);
+
+
+        return $this->render('@ContactList/Address/modifyAddressForm.html.twig', ['form' => $form->createView(),
+            'address' => $address]);
     }
 
     /**
      * @param Request $request
      * @param $id
-     * @Route("/{id}/modify/address/", name="modify_address", methods={"POST"})
+     * @Route("/{id}/modify/", name="modify_address", methods={"POST"})
      * @return RedirectResponse|Response
      */
     public function modifyAddressAction(Request $request, $id)
@@ -65,14 +114,14 @@ class AddressController extends Controller
             $address = $form->getData();
             $em->flush();
 
-            return $this->redirectToRoute('show_all_persons');
+            return $this->redirectToRoute('show_all_address');
         }
-        return $this->render('@ContactList/modifyAddressForm.html.twig', ['form' => $form->createView(), 'id' => $address->getId()]);
+        return $this->render('@ContactList/Address/modifyAddressForm.html.twig', ['form' => $form->createView(), 'id' => $address->getId()]);
     }
 
     /**
      * @param $id
-     * @Route("/{id}/delete/address/", methods={"GET"}, name="delete_address_question")
+     * @Route("/{id}/delete/", methods={"GET"}, name="delete_address_question")
      * @return Response
      */
     public function deleteAddressQuestionAction($id)
@@ -81,13 +130,13 @@ class AddressController extends Controller
         $repository = $em->getRepository("ContactListBundle:Address");
         $address = $repository->find($id);
 
-        return $this->render('@ContactList/deleteAddressForm.html.twig');
+        return $this->render('@ContactList/Address/deleteAddressForm.html.twig');
     }
 
     /**
      * @param $id
      * @return RedirectResponse
-     * @Route("/{id}/delete/address/", name="delete_address", methods={"POST"})
+     * @Route("/{id}/delete/", name="delete_address", methods={"POST"})
      */
     public function deleteAddressAction($id)
     {
@@ -98,7 +147,7 @@ class AddressController extends Controller
         $em->remove($address);
         $em->flush();
 
-        return $this->redirectToRoute('show_all_persons');
+        return $this->redirectToRoute('show_all_address');
 
     }
 }

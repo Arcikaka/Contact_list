@@ -13,14 +13,14 @@ use Symfony\Component\Routing\Annotation\Route;
 class PersonController extends Controller
 {
     /**
-     * @\Symfony\Component\Routing\Annotation\Route("/new/", name="new_person", methods={"GET"})
+     * @Route("/new/", name="new_person", methods={"GET"})
      */
     public function newPersonAction()
     {
         $person = new Person();
         $form = $this->createForm(PersonType::class, $person);
 
-        return $this->render('@ContactList/newPersonForm.html.twig', ['form' => $form->createView()]);
+        return $this->render('@ContactList/Person/newPersonForm.html.twig', ['form' => $form->createView()]);
 
     }
 
@@ -58,7 +58,7 @@ class PersonController extends Controller
         $repository = $em->getRepository("ContactListBundle:Person");
         $person = $repository->find($id);
 
-        return $this->render('@ContactList/showPersonById.html.twig', ['person' => $person]);
+        return $this->render('@ContactList/Person/showPersonById.html.twig', ['person' => $person]);
 
     }
 
@@ -72,7 +72,7 @@ class PersonController extends Controller
         /** @var Person[] $persons */
         $persons = $repository->findAll();
 
-        return $this->render("@ContactList/showAll.html.twig", ['persons' => $persons]);
+        return $this->render("@ContactList/Person/showAllPerson.html.twig", ['persons' => $persons]);
     }
 
     /**
@@ -87,7 +87,7 @@ class PersonController extends Controller
         $form = $this->createForm(PersonType::class, $person);
 
 
-        return $this->render('@ContactList/modyfiPersonForm.html.twig', ['form' => $form->createView(),
+        return $this->render('@ContactList/Person/modifyPersonForm.html.twig', ['form' => $form->createView(),
             'person' => $person]);
     }
 
@@ -126,7 +126,7 @@ class PersonController extends Controller
         $repository = $em->getRepository("ContactListBundle:Person");
         $person = $repository->find($id);
 
-        return $this->render('@ContactList/deletePersonForm.html.twig');
+        return $this->render('@ContactList/Person/deletePersonForm.html.twig');
 
     }
 
