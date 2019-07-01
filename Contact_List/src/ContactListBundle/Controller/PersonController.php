@@ -20,7 +20,7 @@ class PersonController extends Controller
         $person = new Person();
         $form = $this->createForm(PersonType::class, $person);
 
-        return $this->render('@ContactList/Person/newPersonForm.html.twig', ['form' => $form->createView()]);
+        return $this->render('@ContactList/formTemplate.html.twig', ['form' => $form->createView()]);
 
     }
 
@@ -87,7 +87,7 @@ class PersonController extends Controller
         $form = $this->createForm(PersonType::class, $person);
 
 
-        return $this->render('@ContactList/Person/modifyPersonForm.html.twig', ['form' => $form->createView(),
+        return $this->render('@ContactList/formTemplate.html.twig', ['form' => $form->createView(),
             'person' => $person]);
     }
 

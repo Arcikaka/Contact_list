@@ -25,7 +25,7 @@ class PhoneController extends Controller
         $phone = new Phone();
         $form = $this->createForm(PhoneType::class, $phone);
 
-        return $this->render('@ContactList/Phone/newPhoneForm.html.twig', ['form' => $form->createView()]);
+        return $this->render('@ContactList/formTemplate.html.twig', ['form' => $form->createView()]);
     }
 
     /**
@@ -48,7 +48,7 @@ class PhoneController extends Controller
 
             return $this->redirectToRoute('show_all_persons');
         }
-        return $this->render('@ContactList/Phone/newPhoneForm.html.twig', ['form' => $form->createView()]);
+        return $this->render('@ContactList/formTemplate.html.twig', ['form' => $form->createView()]);
     }
 
     /**
@@ -91,13 +91,13 @@ class PhoneController extends Controller
 
         $form = $this->createForm(PhoneType::class, $phone);
 
-        return $this->render('@ContactList/Phone/modifyPhoneForm.html.twig', ['form' => $form->createView(), 'id' => $phone->getId()]);
+        return $this->render('@ContactList/formTemplate.html.twig', ['form' => $form->createView(), 'id' => $phone->getId()]);
 
     }
     /**
      * @param Request $request
      * @param $id
-     * @Route("/{id}/modify//", name="modify_phone", methods={"POST"})
+     * @Route("/{id}/modify/", name="modify_phone", methods={"POST"})
      * @return RedirectResponse|Response
      */
     public function modifyPhoneAction(Request $request, $id)
@@ -110,17 +110,16 @@ class PhoneController extends Controller
 
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
-            $phone = $form->getData();
             $em->flush();
 
             return $this->redirectToRoute('show_all_persons');
         }
-        return $this->render('@ContactList/Phone/modifyPhoneForm.html.twig', ['form' => $form->createView(), 'id' => $phone->getId()]);
+        return $this->render('@ContactList/formTemplate.html.twig', ['form' => $form->createView(), 'id' => $phone->getId()]);
     }
 
     /**
      * @param $id
-     * @Route("/{id}/delete//", methods={"GET"}, name="delete_phone_question")
+     * @Route("/{id}/delete/", methods={"GET"}, name="delete_phone_question")
      * @return Response
      */
     public function deletePhoneQuestionAction($id)
@@ -135,7 +134,7 @@ class PhoneController extends Controller
     /**
      * @param $id
      * @return RedirectResponse
-     * @Route("/{id}/delete//", name="delete_phone", methods={"POST"})
+     * @Route("/{id}/delete/", name="delete_phone", methods={"POST"})
      */
     public function deletePhoneAction($id)
     {

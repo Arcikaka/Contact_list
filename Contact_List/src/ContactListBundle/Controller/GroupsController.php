@@ -25,7 +25,7 @@ class GroupsController extends Controller
         $group = new Groups();
         $form = $this->createForm(GroupsType::class, $group);
 
-        return $this->render('@ContactList/Groups/newGroupForm.html.twig', ['form' => $form->createView()]);
+        return $this->render('@ContactList/formTemplate.html.twig', ['form' => $form->createView()]);
     }
 
     /**
@@ -48,7 +48,7 @@ class GroupsController extends Controller
 
             return $this->redirectToRoute('show_group_by_id', ['id' => $group->getId()]);
         }
-        return $this->render('@ContactList/Groups/newGroupForm.html.twig', ['form' => $form->createView()]);
+        return $this->render('@ContactList/formTemplate.html.twig', ['form' => $form->createView()]);
     }
 
     /**
@@ -92,7 +92,7 @@ class GroupsController extends Controller
 
         $form = $this->createForm(GroupsType::class, $group);
 
-        return $this->render('@ContactList/Groups/modifyGroupForm.html.twig', ['form' => $form->createView(), 'id' => $group->getId()]);
+        return $this->render('@ContactList/formTemplate.html.twig', ['form' => $form->createView(), 'id' => $group->getId()]);
 
     }
 
@@ -117,7 +117,7 @@ class GroupsController extends Controller
 
             return $this->redirectToRoute('show_all_groups');
         }
-        return $this->render('@ContactList/Groups/modifyGroupForm.html.twig', ['form' => $form->createView(), 'id' => $group->getId()]);
+        return $this->render('@ContactList/formTemplate.html.twig', ['form' => $form->createView(), 'id' => $group->getId()]);
     }
 
     /**

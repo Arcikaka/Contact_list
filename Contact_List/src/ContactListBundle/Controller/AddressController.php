@@ -25,7 +25,7 @@ class AddressController extends Controller
         $address = new Address();
         $form = $this->createForm(AddressType::class, $address);
 
-        return $this->render('@ContactList/Address/newAddressForm.html.twig', ['form' => $form->createView()]);
+        return $this->render('@ContactList/formTemplate.html.twig', ['form' => $form->createView()]);
     }
 
     /**
@@ -48,7 +48,7 @@ class AddressController extends Controller
 
             return $this->redirectToRoute('show_address_by_id', ['id' => $address->getId()]);
         }
-        return $this->render('@ContactList/Address/newAddressForm.html.twig', ['form' => $form->createView()]);
+        return $this->render('@ContactList/formTemplate.html.twig', ['form' => $form->createView()]);
     }
 
     /**
@@ -91,7 +91,7 @@ class AddressController extends Controller
         $form = $this->createForm(AddressType::class, $address);
 
 
-        return $this->render('@ContactList/Address/modifyAddressForm.html.twig', ['form' => $form->createView(),
+        return $this->render('@ContactList/formTemplate.html.twig', ['form' => $form->createView(),
             'address' => $address]);
     }
 
@@ -111,12 +111,11 @@ class AddressController extends Controller
 
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
-            $address = $form->getData();
             $em->flush();
 
             return $this->redirectToRoute('show_all_address');
         }
-        return $this->render('@ContactList/Address/modifyAddressForm.html.twig', ['form' => $form->createView(), 'id' => $address->getId()]);
+        return $this->render('@ContactList/formTemplate.html.twig', ['form' => $form->createView(), 'id' => $address->getId()]);
     }
 
     /**

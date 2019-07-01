@@ -13,7 +13,7 @@ use Symfony\Component\Routing\Annotation\Route;
 /**
  * Class EmailController
  * @package ContactListBundle\Controller
- * @Route("/Email")
+ * @Route("/email")
  */
 class EmailController extends Controller
 {
@@ -25,7 +25,7 @@ class EmailController extends Controller
         $email = new Email();
         $form = $this->createForm(EmailType::class, $email);
 
-        return $this->render('@ContactList/Email/newEmailForm.html.twig', ['form' => $form->createView()]);
+        return $this->render('@ContactList/formTemplate.html.twig', ['form' => $form->createView()]);
     }
 
     /**
@@ -48,7 +48,7 @@ class EmailController extends Controller
 
             return $this->redirectToRoute('');
         }
-        return $this->render('@ContactList/Email/newEmailForm.html.twig', ['form' => $form->createView()]);
+        return $this->render('@ContactList/formTemplate.html.twig', ['form' => $form->createView()]);
     }
 
     /**
@@ -92,7 +92,7 @@ class EmailController extends Controller
 
         $form = $this->createForm(EmailType::class, $email);
 
-        return $this->render('@ContactList/Email/modifyEmailForm.html.twig', ['form' => $form->createView(), 'id' => $email->getId()]);
+        return $this->render('@ContactList/formTemplate.html.twig', ['form' => $form->createView(), 'id' => $email->getId()]);
 
     }
 
@@ -112,12 +112,11 @@ class EmailController extends Controller
 
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
-            $email = $form->getData();
             $em->flush();
 
             return $this->redirectToRoute('show_all_persons');
         }
-        return $this->render('@ContactList/Email/modifyEmailForm.html.twig', ['form' => $form->createView(), 'id' => $email->getId()]);
+        return $this->render('@ContactList/formTemplate.html.twig', ['form' => $form->createView(), 'id' => $email->getId()]);
     }
 
     /**
