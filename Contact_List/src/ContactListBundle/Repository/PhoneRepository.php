@@ -10,4 +10,5 @@ namespace ContactListBundle\Repository;
  */
 class PhoneRepository extends \Doctrine\ORM\EntityRepository
 {
+
 }

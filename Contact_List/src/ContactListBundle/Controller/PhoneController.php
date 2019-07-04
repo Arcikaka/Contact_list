@@ -141,6 +141,11 @@ class PhoneController extends Controller
         $em = $this->getDoctrine()->getManager();
         $repository = $em->getRepository('ContactListBundle:Phone');
         $phone = $repository->find($id);
+        $personRepo = $em->getRepository('ContactListBundle:Person');
+        $persons = $personRepo->findPersonWithPhone($id);
+        foreach ($persons as $person){
+            $person->setPhone(null);
+        }
 
         $em->remove($phone);
         $em->flush();

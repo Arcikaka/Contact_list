@@ -142,8 +142,13 @@ class GroupsController extends Controller
     public function deleteGroupAction($id)
     {
         $em = $this->getDoctrine()->getManager();
-        $repository = $em->getRepository('ContactListBundle:group');
+        $repository = $em->getRepository('ContactListBundle:Groups');
         $group = $repository->find($id);
+        $personRepo = $em->getRepository('ContactListBundle:Person');
+        $persons = $personRepo->findPersonWithGroup($id);
+        foreach ($persons as $person){
+            $person->removeGroups($group);
+        }
 
         $em->remove($group);
         $em->flush();

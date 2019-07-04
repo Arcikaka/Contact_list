@@ -46,19 +46,19 @@ class Person
     /**
      * @var Address
      * @ORM\ManyToOne(targetEntity="ContactListBundle\Entity\Address", inversedBy="persons")
-     * @ORM\JoinColumn(name="address_id", referencedColumnName="id"))
+     * @ORM\JoinColumn(name="address_id", referencedColumnName="id", nullable=true)
      */
     private $address;
     /**
      * @var Phone
      * @ORM\ManyToOne(targetEntity="ContactListBundle\Entity\Phone", inversedBy="persons")
-     * @ORM\JoinColumn(name="phone_id", referencedColumnName="id")
+     * @ORM\JoinColumn(name="phone_id", referencedColumnName="id", nullable=true)
      */
     private $phone;
     /**
      * @var Email
      * @ORM\ManyToOne(targetEntity="ContactListBundle\Entity\Email", inversedBy="persons")
-     * @ORM\JoinColumn(name="email_id", referencedColumnName="id")
+     * @ORM\JoinColumn(name="email_id", referencedColumnName="id", nullable=true)
      */
     private $email;
 
@@ -166,7 +166,7 @@ class Person
     /**
      * @param Address $address
      */
-    public function setAddress(Address $address)
+    public function setAddress(Address $address = null)
     {
         $this->address = $address;
     }
@@ -182,7 +182,7 @@ class Person
     /**
      * @param Phone $phone
      */
-    public function setPhone(Phone $phone): void
+    public function setPhone(Phone $phone = null)
     {
         $this->phone = $phone;
     }
@@ -198,7 +198,7 @@ class Person
     /**
      * @param Email $email
      */
-    public function setEmail(Email $email): void
+    public function setEmail(Email $email = null)
     {
         $this->email = $email;
     }

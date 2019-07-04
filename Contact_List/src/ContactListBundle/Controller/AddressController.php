@@ -142,11 +142,16 @@ class AddressController extends Controller
         $em = $this->getDoctrine()->getManager();
         $repository = $em->getRepository('ContactListBundle:Address');
         $address = $repository->find($id);
+        $personRepo = $em->getRepository('ContactListBundle:Person');
+        $persons = $personRepo->findPersonWithAddress($id);
+        foreach ($persons as $person){
+            $person->setAddress(null);
+        }
 
         $em->remove($address);
         $em->flush();
 
-        return $this->redirectToRoute('show_all_address');
+        return $this->redirectToRoute('show_all_persons');
 
     }
 }

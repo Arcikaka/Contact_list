@@ -143,6 +143,11 @@ class EmailController extends Controller
         $em = $this->getDoctrine()->getManager();
         $repository = $em->getRepository('ContactListBundle:Email');
         $email = $repository->find($id);
+        $personRepo = $em->getRepository('ContactListBundle:Person');
+        $persons = $personRepo->findPersonWithEmail($id);
+        foreach ($persons as $person){
+            $person->setEmail(null);
+        }
 
         $em->remove($email);
         $em->flush();
