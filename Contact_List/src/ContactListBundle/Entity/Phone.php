@@ -41,6 +41,12 @@ class Phone
      * @ORM\OneToMany(targetEntity="ContactListBundle\Entity\Person", mappedBy="phone")
      */
     private $persons;
+    /**
+     * @var User
+     * @ORM\ManyToOne(targetEntity="ContactListBundle\Entity\User", inversedBy="phone")
+     * @ORM\JoinColumn(name="user_id", onDelete="CASCADE", referencedColumnName="id")
+     */
+    private $user;
 
     public function __construct()
     {
@@ -128,6 +134,22 @@ class Phone
     public function __toString()
     {
         return $this->number . ', ' . $this->type;
+    }
+
+    /**
+     * @return User
+     */
+    public function getUser(): User
+    {
+        return $this->user;
+    }
+
+    /**
+     * @param User $user
+     */
+    public function setUser(User $user): void
+    {
+        $this->user = $user;
     }
 }
 

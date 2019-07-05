@@ -6,6 +6,9 @@
     {{ person.phone }} <br>
     {{ person.address }} <br>
     {{ person.email }} <br>
+    {%  for group in person.groups %}
+    {{ group.name }} <br>
+    {% endfor %}
     <div class="myButton">
         <a href="{{ path('modify_person_form', {"id" : person.id}) }}">Edit Person</a>
     </div>

@@ -39,4 +39,18 @@ class PersonRepository extends EntityRepository
         $query->setParameter('id', $id);
         return $query->getResult();
     }
+
+    public function findPersonByIdWithUserId($id, $user_id)
+    {
+        $query = $this->getEntityManager()->createQuery('SELECT p FROM ContactListBundle:Person p WHERE p.user = :user_id AND p.id =:id');
+        $query->setParameters(['id' => $id, 'user_id' => $user_id]);
+        return $query->getSingleResult();
+    }
+
+    public function findPersonsByUserId($id)
+    {
+        $query = $this->getEntityManager()->createQuery('SELECT p FROM ContactListBundle:Person p WHERE p.user = :user');
+        $query->setParameter('user',$id);
+        return $query->getResult();
+    }
 }

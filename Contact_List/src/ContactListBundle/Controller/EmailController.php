@@ -2,8 +2,8 @@
 
 namespace ContactListBundle\Controller;
 
-use ContactListBundle\Entity\Email;
-use ContactListBundle\Form\EmailType;
+use ContactListBundle\Entity\EmailPerson;
+use ContactListBundle\Form\EmailFormType;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
@@ -22,31 +22,32 @@ class EmailController extends Controller
      */
     public function newEmailAction()
     {
-        $email = new Email();
-        $form = $this->createForm(EmailType::class, $email);
+        $email = new EmailPerson();
+        $form = $this->createForm(EmailFormType::class, $email);
 
         return $this->render('@ContactList/formTemplate.html.twig', ['form' => $form->createView()]);
     }
 
     /**
-     * @Route("/{id}/modify/", name="save_new_email", methods={"POST"})
+     * @Route("/new/", name="save_new_email", methods={"POST"})
      * @param Request $request
      * @return RedirectResponse|Response
      */
     public function saveNewEmailAction(Request $request)
     {
-        $email = new Email();
-        $form = $this->createForm(EmailType::class, $email);
+        $email = new EmailPerson();
+        $form = $this->createForm(EmailFormType::class, $email);
 
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
             $email = $form->getData();
+            $email->setUser($this->getUser());
             $em = $this->getDoctrine()->getManager();
             $em->persist($email);
             $em->flush();
 
-            return $this->redirectToRoute('');
+            return $this->redirectToRoute('show_email_by_id', ['id' => $email->getId()]);
         }
         return $this->render('@ContactList/formTemplate.html.twig', ['form' => $form->createView()]);
     }
@@ -59,7 +60,7 @@ class EmailController extends Controller
     public function showEmailById($id)
     {
         $em = $this->getDoctrine()->getManager();
-        $repository = $em->getRepository('ContactListBundle:Email');
+        $repository = $em->getRepository('ContactListBundle:EmailPerson');
         $email = $repository->find($id);
 
         return $this->render('@ContactList/Email/showEmailById.html.twig', ['email' => $email]);
@@ -69,11 +70,11 @@ class EmailController extends Controller
     /**
      * @Route("/", name="show_all_emails", methods={"GET"})
      */
-    public function showAllAddress()
+    public function showAllEmails()
     {
         $em = $this->getDoctrine()->getManager();
-        $repository = $em->getRepository('ContactListBundle:Address');
-        /** @var Email[] $emails */
+        $repository = $em->getRepository('ContactListBundle:EmailPerson');
+        /** @var EmailPerson[] $emails */
         $emails = $repository->findAll();
 
         return $this->render('@ContactList/Email/showAllEmails.html.twig', ['emails' => $emails]);
@@ -87,10 +88,10 @@ class EmailController extends Controller
     public function modifyEmailFormAction($id)
     {
         $em = $this->getDoctrine()->getManager();
-        $repository = $em->getRepository("ContactListBundle:Email");
+        $repository = $em->getRepository("ContactListBundle:EmailPerson");
         $email = $repository->find($id);
 
-        $form = $this->createForm(EmailType::class, $email);
+        $form = $this->createForm(EmailFormType::class, $email);
 
         return $this->render('@ContactList/formTemplate.html.twig', ['form' => $form->createView(), 'id' => $email->getId()]);
 
@@ -105,10 +106,10 @@ class EmailController extends Controller
     public function modifyEmailAction(Request $request, $id)
     {
         $em = $this->getDoctrine()->getManager();
-        $repository = $em->getRepository("ContactListBundle:Email");
+        $repository = $em->getRepository("ContactListBundle:EmailPerson");
         $email = $repository->find($id);
 
-        $form = $this->createForm(EmailType::class, $email);
+        $form = $this->createForm(EmailFormType::class, $email);
 
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
@@ -127,7 +128,7 @@ class EmailController extends Controller
     public function deleteEmailQuestionAction($id)
     {
         $em = $this->getDoctrine()->getManager();
-        $repository = $em->getRepository("ContactListBundle:Email");
+        $repository = $em->getRepository("ContactListBundle:EmailPerson");
         $email = $repository->find($id);
 
         return $this->render('@ContactList/Email/deleteEmailForm.html.twig');
@@ -141,11 +142,11 @@ class EmailController extends Controller
     public function deleteEmailAction($id)
     {
         $em = $this->getDoctrine()->getManager();
-        $repository = $em->getRepository('ContactListBundle:Email');
+        $repository = $em->getRepository('ContactListBundle:EmailPerson');
         $email = $repository->find($id);
         $personRepo = $em->getRepository('ContactListBundle:Person');
         $persons = $personRepo->findPersonWithEmail($id);
-        foreach ($persons as $person){
+        foreach ($persons as $person) {
             $person->setEmail(null);
         }
 

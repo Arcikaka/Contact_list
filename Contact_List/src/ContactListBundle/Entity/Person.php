@@ -56,18 +56,24 @@ class Person
      */
     private $phone;
     /**
-     * @var Email
-     * @ORM\ManyToOne(targetEntity="ContactListBundle\Entity\Email", inversedBy="persons")
+     * @var EmailPerson
+     * @ORM\ManyToOne(targetEntity="ContactListBundle\Entity\EmailPerson", inversedBy="persons")
      * @ORM\JoinColumn(name="email_id", referencedColumnName="id", nullable=true)
      */
     private $email;
 
     /**
-     * @var Groups
-     * @ORM\ManyToMany(targetEntity="ContactListBundle\Entity\Groups", inversedBy="persons")
+     * @var GroupsPerson
+     * @ORM\ManyToMany(targetEntity="ContactListBundle\Entity\GroupsPerson", inversedBy="persons")
      */
     private $groups;
-    
+    /**
+     * @var User
+     * @ORM\ManyToOne(targetEntity="ContactListBundle\Entity\User", inversedBy="persons")
+     * @ORM\JoinColumn(name="user_id", referencedColumnName="id", onDelete="CASCADE")
+     */
+    private $user;
+
     public function __construct()
     {
         $this->groups = new ArrayCollection();
@@ -188,39 +194,55 @@ class Person
     }
 
     /**
-     * @return Email
+     * @return EmailPerson
      */
-    public function getEmail(): ?Email
+    public function getEmail(): ?EmailPerson
     {
         return $this->email;
     }
 
     /**
-     * @param Email $email
+     * @param EmailPerson $email
      */
-    public function setEmail(Email $email = null)
+    public function setEmail(EmailPerson $email = null)
     {
         $this->email = $email;
     }
 
-    public function addGroups(Groups $groups)
+    public function addGroups(GroupsPerson $groups)
     {
         if (!$this->groups->contains($groups)) {
             $this->groups->add($groups);
         }
     }
 
-    public function removeGroups(Groups $groups)
+    public function removeGroups(GroupsPerson $groups)
     {
         if ($this->groups->contains($groups)) {
             $this->groups->removeElement($groups);
         }
     }
 
-    public function getGroups() : Collection
+    public function getGroups(): Collection
     {
         return $this->groups;
     }
-    
+
+    /**
+     * @return User
+     */
+    public function getUser(): ?User
+    {
+        return $this->user;
+    }
+
+    /**
+     * @param User $user
+     */
+    public function setUser(User $user): void
+    {
+        $this->user = $user;
+    }
+
 }
 

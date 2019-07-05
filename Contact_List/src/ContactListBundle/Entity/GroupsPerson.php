@@ -12,7 +12,7 @@ use Doctrine\ORM\Mapping as ORM;
  * @ORM\Table(name="groups")
  * @ORM\Entity(repositoryClass="ContactListBundle\Repository\GroupsRepository")
  */
-class Groups
+class GroupsPerson
 {
     /**
      * @var int
@@ -43,6 +43,13 @@ class Groups
      */
     private $persons;
 
+    /**
+     * @var User
+     * @ORM\ManyToOne(targetEntity="ContactListBundle\Entity\User", inversedBy="groups")
+     * @ORM\JoinColumn(name="user_id", referencedColumnName="id", onDelete="CASCADE")
+     */
+    private $user;
+
     public function __construct()
     {
         $this->persons = new ArrayCollection();
@@ -63,7 +70,7 @@ class Groups
      *
      * @param string $name
      *
-     * @return Groups
+     * @return GroupsPerson
      */
     public function setName($name)
     {
@@ -87,7 +94,7 @@ class Groups
      *
      * @param string $description
      *
-     * @return Groups
+     * @return GroupsPerson
      */
     public function setDescription($description)
     {
@@ -120,9 +127,25 @@ class Groups
         }
     }
 
-    public function getPerson() : Collection
+    public function getPerson(): Collection
     {
         return $this->persons;
+    }
+
+    /**
+     * @return User
+     */
+    public function getUser(): User
+    {
+        return $this->user;
+    }
+
+    /**
+     * @param User $user
+     */
+    public function setUser(User $user): void
+    {
+        $this->user = $user;
     }
 }
 

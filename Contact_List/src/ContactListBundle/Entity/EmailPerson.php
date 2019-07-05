@@ -12,7 +12,7 @@ use Doctrine\ORM\Mapping as ORM;
  * @ORM\Table(name="email")
  * @ORM\Entity(repositoryClass="ContactListBundle\Repository\EmailRepository")
  */
-class Email
+class EmailPerson
 {
     /**
      * @var int
@@ -41,11 +41,18 @@ class Email
      * @ORM\OneToMany(targetEntity="ContactListBundle\Entity\Person", mappedBy="email")
      */
     private $persons;
+    /**
+     * @var User
+     * @ORM\ManyToOne(targetEntity="ContactListBundle\Entity\User", inversedBy="email")
+     * @ORM\JoinColumn(name="user_id", referencedColumnName="id", onDelete="CASCADE")
+     */
+    private $user;
 
     public function __construct()
     {
         $this->persons = new ArrayCollection();
     }
+
     /**
      * Get id
      *
@@ -61,7 +68,7 @@ class Email
      *
      * @param string $emailAddress
      *
-     * @return Email
+     * @return EmailPerson
      */
     public function setEmailAddress($emailAddress)
     {
@@ -85,7 +92,7 @@ class Email
      *
      * @param string $type
      *
-     * @return Email
+     * @return EmailPerson
      */
     public function setType($type)
     {
@@ -103,6 +110,7 @@ class Email
     {
         return $this->type;
     }
+
     public function addPerson(Person $person)
     {
         if (!$this->persons->contains($person)) {
@@ -117,7 +125,7 @@ class Email
         }
     }
 
-    public function getPerson() : Collection
+    public function getPerson(): Collection
     {
         return $this->persons;
     }
@@ -125,6 +133,22 @@ class Email
     public function __toString()
     {
         return $this->emailAddress . ', ' . $this->type;
+    }
+
+    /**
+     * @return User
+     */
+    public function getUser(): User
+    {
+        return $this->user;
+    }
+
+    /**
+     * @param User $user
+     */
+    public function setUser(User $user): void
+    {
+        $this->user = $user;
     }
 }
 

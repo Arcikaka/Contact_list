@@ -21,9 +21,9 @@ class PersonType extends AbstractType
             ->add('surname', TextType::class, ['label' => 'surname', 'trim' => true])
             ->add('description', TextType::class, ['label' => 'description', 'trim' => true])
             ->add('address', EntityType::class, ['class' => 'ContactListBundle\Entity\Address'])
-            ->add('email', EntityType::class, ['class' => 'ContactListBundle\Entity\Email'])
+            ->add('email', EntityType::class, ['class' => 'ContactListBundle\Entity\EmailPerson'])
             ->add('phone', EntityType::class, ['class' => 'ContactListBundle\Entity\Phone'])
-            ->add('groups', EntityType::class, ['class' => 'ContactListBundle\Entity\Groups', 'choice_label' => 'name'])
+            ->add('groups', EntityType::class, ['class' => 'ContactListBundle\Entity\GroupsPerson', 'multiple' => true, 'choice_label' => 'name'])
             ->add('save', SubmitType::class, ['label' => 'Save Person']);
 
     }
@@ -34,6 +34,6 @@ class PersonType extends AbstractType
             ['data_class' => Person::class]
         );
     }
-    
-    
+
+
 }

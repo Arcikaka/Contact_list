@@ -21,7 +21,7 @@ class AddressType extends AbstractType
             ->add('zipCode', TextType::class, ['label' => 'zip code', 'trim' => true])
             ->add('street', TextType::class, ['label' => 'street','trim' => true])
             ->add('houseNumber', IntegerType::class, ['label' => 'house number'])
-            ->add('flat', TextType::class, ['label' => 'flat', 'trim' => true])
+            ->add('flat', TextType::class, ['label' => 'flat', 'trim' => true, 'required' => false])
             ->add('save', SubmitType::class, ['label' => 'Save Address']);
 
     }

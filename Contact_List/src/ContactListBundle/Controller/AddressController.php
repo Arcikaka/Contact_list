@@ -42,6 +42,7 @@ class AddressController extends Controller
 
         if ($form->isSubmitted() && $form->isValid()) {
             $address = $form->getData();
+            $address->setUser($this->getUser());
             $em = $this->getDoctrine()->getManager();
             $em->persist($address);
             $em->flush();

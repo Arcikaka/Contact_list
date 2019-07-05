@@ -4,7 +4,7 @@
 namespace ContactListBundle\Form;
 
 
-use ContactListBundle\Entity\Groups;
+use ContactListBundle\Entity\GroupsPerson;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
@@ -26,7 +26,7 @@ class GroupsType extends AbstractType
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults(
-            ['data_class' => Groups::class]
+            ['data_class' => GroupsPerson::class]
         );
     }
 

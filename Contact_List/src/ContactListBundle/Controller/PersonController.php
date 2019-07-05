@@ -38,6 +38,7 @@ class PersonController extends Controller
 
         if ($form->isSubmitted() && $form->isValid()) {
             $person = $form->getData();
+            $person->setUser($this->getUser());
             $em = $this->getDoctrine()->getManager();
             $em->persist($person);
             $em->flush();
@@ -56,7 +57,7 @@ class PersonController extends Controller
     {
         $em = $this->getDoctrine()->getManager();
         $repository = $em->getRepository("ContactListBundle:Person");
-        $person = $repository->find($id);
+        $person = $repository->findPersonByIdWithUserId($id, $this->getUser()->getId());
 
         return $this->render('@ContactList/Person/showPersonById.html.twig', ['person' => $person]);
 
@@ -70,7 +71,7 @@ class PersonController extends Controller
         $em = $this->getDoctrine()->getManager();
         $repository = $em->getRepository("ContactListBundle:Person");
         /** @var Person[] $persons */
-        $persons = $repository->findAll();
+        $persons = $repository->findPersonsByUserId($this->getUser()->getId());
 
         return $this->render("@ContactList/Person/showAllPerson.html.twig", ['persons' => $persons]);
     }

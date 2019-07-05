@@ -60,6 +60,12 @@ class Address
      * @ORM\OneToMany(targetEntity="ContactListBundle\Entity\Person", mappedBy="address")
      */
     private $persons;
+    /**
+     * @var User
+     * @ORM\ManyToOne(targetEntity="ContactListBundle\Entity\User", inversedBy="address")
+     * @ORM\JoinColumn(name="user_id", referencedColumnName="id", onDelete="CASCADE")
+     */
+    private $user;
 
     public function __construct()
     {
@@ -210,6 +216,22 @@ class Address
     public function __toString()
     {
         return $this->city . ', ' . $this->street . ', ' . $this->houseNumber . ', ' . $this->flat . ', ' . $this->zipCode;
+    }
+
+    /**
+     * @return User
+     */
+    public function getUser(): User
+    {
+        return $this->user;
+    }
+
+    /**
+     * @param User $user
+     */
+    public function setUser(User $user): void
+    {
+        $this->user = $user;
     }
 }
 

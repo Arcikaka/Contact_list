@@ -3,7 +3,9 @@
     {{ address.city }} <br>
     {{ address.street }} <br>
     {{ address.houseNumber }} <br>
-    {{ address.flat }} <br>
+    {% if address.flat %}
+        {{ address.flat }}<br>
+    {% endif %}
     {{ address.zipCode }} <br>
     <div class="myButton">
         <a href="{{ path('modify_address', {"id" : address.id}) }}">Edit Address</a>

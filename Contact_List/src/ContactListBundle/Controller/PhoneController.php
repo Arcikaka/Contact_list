@@ -43,6 +43,7 @@ class PhoneController extends Controller
         if ($form->isSubmitted() && $form->isValid()) {
             $phone = $form->getData();
             $em = $this->getDoctrine()->getManager();
+            $phone->setUser($this->getUser());
             $em->persist($phone);
             $em->flush();
 
@@ -94,6 +95,7 @@ class PhoneController extends Controller
         return $this->render('@ContactList/formTemplate.html.twig', ['form' => $form->createView(), 'id' => $phone->getId()]);
 
     }
+
     /**
      * @param Request $request
      * @param $id
@@ -143,7 +145,7 @@ class PhoneController extends Controller
         $phone = $repository->find($id);
         $personRepo = $em->getRepository('ContactListBundle:Person');
         $persons = $personRepo->findPersonWithPhone($id);
-        foreach ($persons as $person){
+        foreach ($persons as $person) {
             $person->setPhone(null);
         }
 
