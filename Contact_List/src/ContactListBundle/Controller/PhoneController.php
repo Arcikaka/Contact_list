@@ -42,6 +42,7 @@ class PhoneController extends Controller
 
         if ($form->isSubmitted() && $form->isValid()) {
             $phone = $form->getData();
+            $phone->setUser($this->getUser());
             $em = $this->getDoctrine()->getManager();
             $phone->setUser($this->getUser());
             $em->persist($phone);
@@ -61,7 +62,7 @@ class PhoneController extends Controller
     {
         $em = $this->getDoctrine()->getManager();
         $repository = $em->getRepository('ContactListBundle:Phone');
-        $phone = $repository->find($id);
+        $phone = $repository->findPhoneByIdWithUserId($id, $this->getUser()->getId());
 
         return $this->render('@ContactList/Phone/showPhoneById.html.twig', ['phone' => $phone]);
     }
@@ -74,7 +75,7 @@ class PhoneController extends Controller
     {
         $em = $this->getDoctrine()->getManager();
         $repository = $em->getRepository('ContactListBundle:Phone');
-        $phones = $repository->findAll();
+        $phones = $repository->findPhoneByUserId($this->getUser()->getId());
 
         return $this->render('@ContactList/Phone/showAllPhones.html.twig', ['phones' => $phones]);
     }
@@ -88,7 +89,7 @@ class PhoneController extends Controller
     {
         $em = $this->getDoctrine()->getManager();
         $repository = $em->getRepository("ContactListBundle:Phone");
-        $phone = $repository->find($id);
+        $phone = $repository->findPhoneByIdWithUserId($id, $this->getUser()->getId());
 
         $form = $this->createForm(PhoneType::class, $phone);
 
@@ -106,7 +107,7 @@ class PhoneController extends Controller
     {
         $em = $this->getDoctrine()->getManager();
         $repository = $em->getRepository("ContactListBundle:Phone");
-        $phone = $repository->find($id);
+        $phone = $repository->findPhoneByIdWithUserId($id, $this->getUser()->getId());
 
         $form = $this->createForm(PhoneType::class, $phone);
 
@@ -128,7 +129,7 @@ class PhoneController extends Controller
     {
         $em = $this->getDoctrine()->getManager();
         $repository = $em->getRepository("ContactListBundle:Phone");
-        $phone = $repository->find($id);
+        $phone = $repository->findPhoneByIdWithUserId($id, $this->getUser()->getId());
 
         return $this->render('@ContactList/Phone/deletePhoneForm.html.twig');
     }
@@ -142,7 +143,7 @@ class PhoneController extends Controller
     {
         $em = $this->getDoctrine()->getManager();
         $repository = $em->getRepository('ContactListBundle:Phone');
-        $phone = $repository->find($id);
+        $phone = $repository->findPhoneByIdWithUserId($id, $this->getUser()->getId());
         $personRepo = $em->getRepository('ContactListBundle:Person');
         $persons = $personRepo->findPersonWithPhone($id);
         foreach ($persons as $person) {

@@ -18,7 +18,7 @@ use Symfony\Component\Routing\Annotation\Route;
 class AddressController extends Controller
 {
     /**
-     * @\Symfony\Component\Routing\Annotation\Route("/new/", name="new_address_form", methods={"GET"})
+     * @Route("/new/", name="new_address_form", methods={"GET"})
      */
     public function newAddressAction()
     {
@@ -61,7 +61,7 @@ class AddressController extends Controller
     {
         $em = $this->getDoctrine()->getManager();
         $repository = $em->getRepository('ContactListBundle:Address');
-        $address = $repository->find($id);
+        $address = $repository->findAddressByIdWithUserId($id, $this->getUser()->getId());
 
         return $this->render('@ContactList/Address/showAddressById.html.twig', ['address' => $address]);
 
@@ -75,7 +75,7 @@ class AddressController extends Controller
         $em = $this->getDoctrine()->getManager();
         $repository = $em->getRepository('ContactListBundle:Address');
         /** @var Address[] $addresses */
-        $addresses = $repository->findAll();
+        $addresses = $repository->findAddressByUserId($this->getUser()->getId());
 
         return $this->render('@ContactList/Address/showAllAddress.html.twig', ['addresses' => $addresses]);
     }
@@ -88,7 +88,7 @@ class AddressController extends Controller
     public function modifyAddressFormAction($id)
     {
         $em = $this->getDoctrine()->getManager();
-        $address = $em->getRepository('ContactListBundle:Address')->find($id);
+        $address = $em->getRepository('ContactListBundle:Address')->findAddressByIdWithUserId($id, $this->getUser()->getId());
         $form = $this->createForm(AddressType::class, $address);
 
 
@@ -106,7 +106,7 @@ class AddressController extends Controller
     {
         $em = $this->getDoctrine()->getManager();
         $repository = $em->getRepository("ContactListBundle:Address");
-        $address = $repository->find($id);
+        $address = $repository->findAddressByIdWithUserId($id, $this->getUser()->getId());
 
         $form = $this->createForm(AddressType::class, $address);
 
@@ -128,7 +128,7 @@ class AddressController extends Controller
     {
         $em = $this->getDoctrine()->getManager();
         $repository = $em->getRepository("ContactListBundle:Address");
-        $address = $repository->find($id);
+        $address = $repository->findAddressByIdWithUserId($id, $this->getUser()->getId());
 
         return $this->render('@ContactList/Address/deleteAddressForm.html.twig');
     }
@@ -142,7 +142,7 @@ class AddressController extends Controller
     {
         $em = $this->getDoctrine()->getManager();
         $repository = $em->getRepository('ContactListBundle:Address');
-        $address = $repository->find($id);
+        $address = $repository->findAddressByIdWithUserId($id, $this->getUser()->getId());
         $personRepo = $em->getRepository('ContactListBundle:Person');
         $persons = $personRepo->findPersonWithAddress($id);
         foreach ($persons as $person){

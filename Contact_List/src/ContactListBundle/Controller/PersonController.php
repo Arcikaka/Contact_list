@@ -84,7 +84,7 @@ class PersonController extends Controller
     public function modifyPersonFormAction($id)
     {
         $em = $this->getDoctrine()->getManager();
-        $person = $em->getRepository('ContactListBundle:Person')->find($id);
+        $person = $em->getRepository('ContactListBundle:Person')->findPersonByIdWithUserId($id, $this->getUser()->getId());
         $form = $this->createForm(PersonType::class, $person);
 
 
@@ -102,7 +102,7 @@ class PersonController extends Controller
     {
         $em = $this->getDoctrine()->getManager();
         $repository = $em->getRepository("ContactListBundle:Person");
-        $person = $repository->find($id);
+        $person = $repository->findPersonByIdWithUserId($id, $this->getUser()->getId());
         $form = $this->createForm(PersonType::class, $person);
 
         $form->handleRequest($request);
@@ -125,7 +125,7 @@ class PersonController extends Controller
     {
         $em = $this->getDoctrine()->getManager();
         $repository = $em->getRepository("ContactListBundle:Person");
-        $person = $repository->find($id);
+        $person = $repository->findPersonByIdWithUserId($id, $this->getUser()->getId());
 
         return $this->render('@ContactList/Person/deletePersonForm.html.twig');
 
@@ -140,7 +140,7 @@ class PersonController extends Controller
     {
         $em = $this->getDoctrine()->getManager();
         $repository = $em->getRepository('ContactListBundle:Person');
-        $person = $repository->find($id);
+        $person = $repository->findPersonByIdWithUserId($id, $this->getUser()->getId());
 
         $em->remove($person);
         $em->flush();

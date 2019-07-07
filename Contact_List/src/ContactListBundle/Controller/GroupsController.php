@@ -61,7 +61,7 @@ class GroupsController extends Controller
     {
         $em = $this->getDoctrine()->getManager();
         $repository = $em->getRepository('ContactListBundle:GroupsPerson');
-        $group = $repository->find($id);
+        $group = $repository->findGroupByIdWithUserId($id, $this->getUser()->getId());
 
         return $this->render('@ContactList/Groups/showGroupById.html.twig', ['group' => $group]);
 
@@ -75,7 +75,7 @@ class GroupsController extends Controller
         $em = $this->getDoctrine()->getManager();
         $repository = $em->getRepository('ContactListBundle:GroupsPerson');
         /** @var GroupsPerson[] $groups */
-        $groups = $repository->findAll();
+        $groups = $repository->findGroupsByUserId($this->getUser()->getId());
 
         return $this->render('@ContactList/Groups/showAllGroups.html.twig', ['groups' => $groups]);
     }
@@ -89,7 +89,7 @@ class GroupsController extends Controller
     {
         $em = $this->getDoctrine()->getManager();
         $repository = $em->getRepository("ContactListBundle:GroupsPerson");
-        $group = $repository->find($id);
+        $group = $repository->findGroupByIdWithUserId($id, $this->getUser()->getId());
 
         $form = $this->createForm(GroupsType::class, $group);
 
@@ -107,14 +107,13 @@ class GroupsController extends Controller
     {
         $em = $this->getDoctrine()->getManager();
         $repository = $em->getRepository("ContactListBundle:GroupsPerson");
-        $group = $repository->find($id);
+        $group = $repository->findGroupByIdWithUserId($id, $this->getUser()->getId());
 
         $form = $this->createForm(GroupsType::class, $group);
 
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
             $group = $form->getData();
-            $group->setUser($this->getUser());
             $em->flush();
 
             return $this->redirectToRoute('show_all_groups');
@@ -131,7 +130,7 @@ class GroupsController extends Controller
     {
         $em = $this->getDoctrine()->getManager();
         $repository = $em->getRepository("ContactListBundle:GroupsPerson");
-        $group = $repository->find($id);
+        $group = $repository->findGroupByIdWithUserId($id, $this->getUser()->getId());
 
         return $this->render('@ContactList/Groups/deleteGroupForm.html.twig');
     }
@@ -145,7 +144,7 @@ class GroupsController extends Controller
     {
         $em = $this->getDoctrine()->getManager();
         $repository = $em->getRepository('ContactListBundle:GroupsPerson');
-        $group = $repository->find($id);
+        $group = $repository->findGroupByIdWithUserId($id, $this->getUser()->getId());
         $persons = $group->getPerson();
         foreach ($persons as $person){
             $person->removeGroups($group);

@@ -61,7 +61,7 @@ class EmailController extends Controller
     {
         $em = $this->getDoctrine()->getManager();
         $repository = $em->getRepository('ContactListBundle:EmailPerson');
-        $email = $repository->find($id);
+        $email = $repository->findEmailByIdWithUserId($id, $this->getUser()->getId());
 
         return $this->render('@ContactList/Email/showEmailById.html.twig', ['email' => $email]);
 
@@ -75,7 +75,7 @@ class EmailController extends Controller
         $em = $this->getDoctrine()->getManager();
         $repository = $em->getRepository('ContactListBundle:EmailPerson');
         /** @var EmailPerson[] $emails */
-        $emails = $repository->findAll();
+        $emails = $repository->findEmailByUserId($this->getUser()->getId());
 
         return $this->render('@ContactList/Email/showAllEmails.html.twig', ['emails' => $emails]);
     }
@@ -89,7 +89,7 @@ class EmailController extends Controller
     {
         $em = $this->getDoctrine()->getManager();
         $repository = $em->getRepository("ContactListBundle:EmailPerson");
-        $email = $repository->find($id);
+        $email = $repository->findEmailByIdWithUserId($id, $this->getUser()->getId());
 
         $form = $this->createForm(EmailFormType::class, $email);
 
@@ -107,7 +107,7 @@ class EmailController extends Controller
     {
         $em = $this->getDoctrine()->getManager();
         $repository = $em->getRepository("ContactListBundle:EmailPerson");
-        $email = $repository->find($id);
+        $email = $repository->findEmailByIdWithUserId($id, $this->getUser()->getId());
 
         $form = $this->createForm(EmailFormType::class, $email);
 
@@ -129,7 +129,7 @@ class EmailController extends Controller
     {
         $em = $this->getDoctrine()->getManager();
         $repository = $em->getRepository("ContactListBundle:EmailPerson");
-        $email = $repository->find($id);
+        $email = $repository->find($id, $this->getUser()->getId());
 
         return $this->render('@ContactList/Email/deleteEmailForm.html.twig');
     }
@@ -143,7 +143,7 @@ class EmailController extends Controller
     {
         $em = $this->getDoctrine()->getManager();
         $repository = $em->getRepository('ContactListBundle:EmailPerson');
-        $email = $repository->find($id);
+        $email = $repository->findEmailByIdWithUserId($id, $this->getUser()->getId());
         $personRepo = $em->getRepository('ContactListBundle:Person');
         $persons = $personRepo->findPersonWithEmail($id);
         foreach ($persons as $person) {
