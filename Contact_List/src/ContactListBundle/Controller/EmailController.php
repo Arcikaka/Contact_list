@@ -125,7 +125,7 @@ class EmailController extends Controller
      * @Route("/{id}/delete/", methods={"GET"}, name="delete_Email_question")
      * @return Response
      */
-    public function deleteEmailQuestionAction($id)
+    public function deleteEmailGetAction($id)
     {
         $em = $this->getDoctrine()->getManager();
         $repository = $em->getRepository("ContactListBundle:EmailPerson");

@@ -124,7 +124,7 @@ class PhoneController extends Controller
      * @Route("/{id}/delete/", methods={"GET"}, name="delete_phone_question")
      * @return Response
      */
-    public function deletePhoneQuestionAction($id)
+    public function deletePhoneGetAction($id)
     {
         $em = $this->getDoctrine()->getManager();
         $repository = $em->getRepository("ContactListBundle:Phone");

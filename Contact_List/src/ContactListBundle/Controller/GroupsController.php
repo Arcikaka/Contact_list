@@ -126,7 +126,7 @@ class GroupsController extends Controller
      * @Route("/{id}/delete/", methods={"GET"}, name="delete_group_question")
      * @return Response
      */
-    public function deleteGroupQuestionAction($id)
+    public function deleteGroupGetAction($id)
     {
         $em = $this->getDoctrine()->getManager();
         $repository = $em->getRepository("ContactListBundle:GroupsPerson");

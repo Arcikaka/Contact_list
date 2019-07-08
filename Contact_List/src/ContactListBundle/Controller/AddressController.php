@@ -124,7 +124,7 @@ class AddressController extends Controller
      * @Route("/{id}/delete/", methods={"GET"}, name="delete_address_question")
      * @return Response
      */
-    public function deleteAddressQuestionAction($id)
+    public function deleteAddressGetAction($id)
     {
         $em = $this->getDoctrine()->getManager();
         $repository = $em->getRepository("ContactListBundle:Address");
