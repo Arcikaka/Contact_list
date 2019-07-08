@@ -61,7 +61,7 @@ class AddressController extends Controller
     {
         $em = $this->getDoctrine()->getManager();
         $repository = $em->getRepository('ContactListBundle:Address');
-        $address = $repository->findAddressByIdWithUserId($id, $this->getUser()->getId());
+        $address = $repository->findAddressByIdWithUser($id, $this->getUser());
 
         return $this->render('@ContactList/Address/showAddressById.html.twig', ['address' => $address]);
 
@@ -75,7 +75,7 @@ class AddressController extends Controller
         $em = $this->getDoctrine()->getManager();
         $repository = $em->getRepository('ContactListBundle:Address');
         /** @var Address[] $addresses */
-        $addresses = $repository->findAddressByUserId($this->getUser()->getId());
+        $addresses = $repository->findAddressByUser($this->getUser());
 
         return $this->render('@ContactList/Address/showAllAddress.html.twig', ['addresses' => $addresses]);
     }
@@ -88,7 +88,7 @@ class AddressController extends Controller
     public function modifyAddressFormAction($id)
     {
         $em = $this->getDoctrine()->getManager();
-        $address = $em->getRepository('ContactListBundle:Address')->findAddressByIdWithUserId($id, $this->getUser()->getId());
+        $address = $em->getRepository('ContactListBundle:Address')->findAddressByIdWithUser($id, $this->getUser());
         $form = $this->createForm(AddressType::class, $address);
 
 
@@ -106,7 +106,7 @@ class AddressController extends Controller
     {
         $em = $this->getDoctrine()->getManager();
         $repository = $em->getRepository("ContactListBundle:Address");
-        $address = $repository->findAddressByIdWithUserId($id, $this->getUser()->getId());
+        $address = $repository->findAddressByIdWithUser($id, $this->getUser());
 
         $form = $this->createForm(AddressType::class, $address);
 
@@ -128,7 +128,7 @@ class AddressController extends Controller
     {
         $em = $this->getDoctrine()->getManager();
         $repository = $em->getRepository("ContactListBundle:Address");
-        $address = $repository->findAddressByIdWithUserId($id, $this->getUser()->getId());
+        $address = $repository->findAddressByIdWithUser($id, $this->getUser());
 
         return $this->render('@ContactList/Address/deleteAddressForm.html.twig');
     }
@@ -142,7 +142,7 @@ class AddressController extends Controller
     {
         $em = $this->getDoctrine()->getManager();
         $repository = $em->getRepository('ContactListBundle:Address');
-        $address = $repository->findAddressByIdWithUserId($id, $this->getUser()->getId());
+        $address = $repository->findAddressByIdWithUser($id, $this->getUser());
         $personRepo = $em->getRepository('ContactListBundle:Person');
         $persons = $personRepo->findPersonWithAddress($id);
         foreach ($persons as $person){

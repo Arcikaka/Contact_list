@@ -2,6 +2,7 @@
 
 namespace ContactListBundle\Repository;
 
+use ContactListBundle\Entity\User;
 use Doctrine\ORM\EntityRepository;
 
 /**
@@ -12,15 +13,17 @@ use Doctrine\ORM\EntityRepository;
  */
 class AddressRepository extends EntityRepository
 {
-    public function findAddressByIdWithUserId($id, $user_id)
+    public function findAddressByIdWithUser($id, User $user)
     {
+        $user_id = $user->getId();
         $query = $this->getEntityManager()->createQuery('SELECT a FROM ContactListBundle:Address a WHERE a.user = :user_id AND a.id =:id');
         $query->setParameters(['id' => $id, 'user_id' => $user_id]);
         return $query->getSingleResult();
     }
 
-    public function findAddressByUserId($id)
+    public function findAddressByUser(User $user)
     {
+        $id = $user->getId();
         $query = $this->getEntityManager()->createQuery('SELECT a FROM ContactListBundle:Address a WHERE a.user = :user');
         $query->setParameter('user',$id);
         return $query->getResult();

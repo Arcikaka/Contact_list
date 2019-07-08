@@ -2,6 +2,7 @@
 
 namespace ContactListBundle\Repository;
 
+use ContactListBundle\Entity\User;
 use Doctrine\ORM\EntityRepository;
 
 /**
@@ -40,15 +41,17 @@ class PersonRepository extends EntityRepository
         return $query->getResult();
     }
 
-    public function findPersonByIdWithUserId($id, $user_id)
+    public function findPersonByIdWithUser($id, User $user)
     {
+        $user_id = $user->getId();
         $query = $this->getEntityManager()->createQuery('SELECT p FROM ContactListBundle:Person p WHERE p.user = :user_id AND p.id =:id');
         $query->setParameters(['id' => $id, 'user_id' => $user_id]);
         return $query->getSingleResult();
     }
 
-    public function findPersonsByUserId($id)
+    public function findPersonsByUser(User $user)
     {
+        $id = $user->getId();
         $query = $this->getEntityManager()->createQuery('SELECT p FROM ContactListBundle:Person p WHERE p.user = :user');
         $query->setParameter('user',$id);
         return $query->getResult();

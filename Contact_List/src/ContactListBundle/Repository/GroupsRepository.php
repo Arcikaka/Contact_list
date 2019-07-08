@@ -2,6 +2,7 @@
 
 namespace ContactListBundle\Repository;
 
+use ContactListBundle\Entity\User;
 use Doctrine\ORM\EntityRepository;
 
 /**
@@ -12,15 +13,17 @@ use Doctrine\ORM\EntityRepository;
  */
 class GroupsRepository extends EntityRepository
 {
-    public function findGroupByIdWithUserId($id, $user_id)
+    public function findGroupByIdWithUser($id, User $user)
     {
+        $user_id = $user->getId();
         $query = $this->getEntityManager()->createQuery('SELECT g FROM ContactListBundle:GroupsPerson g WHERE g.user = :user_id AND g.id =:id');
         $query->setParameters(['id' => $id, 'user_id' => $user_id]);
         return $query->getSingleResult();
     }
 
-    public function findGroupsByUserId($id)
+    public function findGroupsByUser(User $user)
     {
+        $id = $user->getId();
         $query = $this->getEntityManager()->createQuery('SELECT g FROM ContactListBundle:GroupsPerson g WHERE g.user = :user');
         $query->setParameter('user',$id);
         return $query->getResult();
